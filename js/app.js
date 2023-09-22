@@ -13,10 +13,6 @@ const app = new Vue({
         }
     },
     computed: {
-        hoursRemain() {
-            return(+this.plannedWork - +this.completedWork) || 1
-        },
-
         plannedCompletionPeriod() {
             return (+this.plannedWork / +this.hoursPerWorkingDay / +this.workersNumber) || 0
         },
