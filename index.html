@@ -180,7 +180,7 @@
                 :class="['progress', actualCompletionPercentage < plannedCompletionPercentage ? 'is-danger' : 'is-success']"
                 :value="actualCompletionPercentage" max="1">{{ actualCompletionPercentage }}</progress>
               
-              <p><strong class="has-text-success">{{ actualCompletionPercentage > plannedCompletionPercentage ? "Project Exceeding Planned Efficiency!" : "" }}</strong></p>
+              <p><strong class="has-text-success">{{ remainingWork ? actualCompletionPercentage > plannedCompletionPercentage ? "Project Exceeding Planned Efficiency!" : "" : "" }}</strong></p>
               <p><strong>Days Actually Worked: {{ elapsedPeriod.toFixed () }} Days</strong></p>
             </div>
           </div>
