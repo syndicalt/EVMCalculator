@@ -2,14 +2,14 @@ const app = new Vue({
     el: "#app",
     data() {
         return {
-            plannedWork: 2400,
-            completedWork: 1200,
-            remainingWork: 1000,
-            workersNumber: 5,
+            plannedWork: null,
+            completedWork: null,
+            remainingWork: null,
+            workersNumber: null,
             currency: "$",
-            humanHourCost: 20,
+            humanHourCost: null,
             hoursPerWorkingDay: 8,
-            decimalDigits: 2
+            decimalDigits: 0
         }
     },
     computed: {
@@ -63,3 +63,7 @@ const app = new Vue({
         }
     }
 })
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<html lang="ru">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Earned Value Management Calculator">
 
-  <title>Калькулятор EVM</title>
+  <title>EVM Calculator</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.0/css/bulma.min.css">
 </head>
@@ -16,15 +16,15 @@
   <main id="app">
     <section class="section">
       <div class="container">
-        <h1 class="title is-2">Метод освоенного объема</h1>
+        <h1 class="title is-2">Earned Value Method</h1>
         <div class="columns">
           <div class="column">
             <div class="container box">
-              <h2 class="title is-4">Исходные данные</h2>
+              <h2 class="title is-4">Input Data</h2>
               <div class="columns">
                 <div class="column">
                   <div class="field">
-                    <label class="label">Плановые трудозатраты, чел. ч</label>
+                    <label class="label">Planned Work Hours (Person-Hour)</label>
                     <div class="control">
                       <input v-model="plannedWork" type="number" min="0" class="input">
                     </div>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="column">
                   <div class="field">
-                    <label class="label">Валюта</label>
+                    <label class="label">Currency</label>
                     <div class="control">
                       <div class="control">
                         <input v-model="currency" type="text" class="input">
@@ -44,7 +44,7 @@
               <div class="columns">
                 <div class="column">
                   <div class="field">
-                    <label class="label">Уже отработано, чел. ч</label>
+                    <label class="label">Hours Complete (Person-Hour)</label>
                     <div class="control">
                       <input v-model="completedWork" type="number" min="0" class="input">
                     </div>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="column">
                   <div class="field">
-                    <label class="label">Стоимость одного человеко-часа, {{ currency }}</label>
+                    <label class="label">Houry Cost, {{ currency }}</label>
                     <div class="control">
                       <input v-model="humanHourCost" type="number" min="0" class="input">
                     </div>
@@ -62,7 +62,7 @@
               <div class="columns">
                 <div class="column">
                   <div class="field">
-                    <label class="label">Осталось отработать, чел. ч</label>
+                    <label class="label">Remaining Work-Hours (Person-Hour)</label>
                     <div class="control">
                       <input v-model="remainingWork" type="number" min="0" class="input">
                     </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="column">
                   <div class="field">
-                    <label class="label">Продолжительность рабочего дня, ч</label>
+                    <label class="label">Working Day Duration (Hours)</label>
                     <div class="control">
                       <input v-model="hoursPerWorkingDay" type="number" min="0" class="input">
                     </div>
@@ -80,7 +80,7 @@
               <div class="columns">
                 <div class="column">
                   <div class="field">
-                    <label class="label">Количество работников</label>
+                    <label class="label">Number of Workers</label>
                     <div class="control">
                       <input v-model="workersNumber" type="number" min="1" class="input">
                     </div>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="column">
                   <div class="field">
-                    <label class="label">Знаков после запятой</label>
+                    <label class="label">Decimal Places</label>
                     <div class="control">
                       <input v-model="decimalDigits" type="number" min="0" max="20" class="input">
                     </div>
@@ -99,67 +99,67 @@
           </div>
           <div class="column">
             <div class="container box">
-              <h1 class="title is-4">Показатели проекта</h1>
+              <h1 class="title is-4">Project Indicators</h1>
               <table class="table is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                   <tr>
-                    <th>Параметр</th>
-                    <th>Значение</th>
+                    <th>Parameter</th>
+                    <th>Value</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>BAC</strong> (бюджет по завершению), {{ currency }}</td>
-                    <td>{{ budgetAtCompletion.toFixed(decimalDigits) }}</td>
+                    <td><strong>BAC</strong> (Budget At Completion)</td>
+                    <td>{{ currency }}{{ numberWithCommas(budgetAtCompletion.toFixed(decimalDigits)) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>PV</strong> (плановый объем), {{ currency }}</td>
-                    <td>{{ plannedValue.toFixed(decimalDigits) }}</td>
+                    <td><strong>PV</strong> (Planned Value)</td>
+                    <td>{{ currency }}{{ numberWithCommas(plannedValue.toFixed(decimalDigits)) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>EV</strong> (освоенный объем), {{ currency }}</td>
-                    <td>{{ earnedValue.toFixed(decimalDigits) }}</td>
+                    <td><strong>EV</strong> (Earned Value)</td>
+                    <td>{{ currency }}{{ numberWithCommas(earnedValue.toFixed(decimalDigits)) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>AC</strong> (фактическая стоимость), {{ currency }}</td>
-                    <td>{{ actualCost.toFixed(decimalDigits) }}</td>
+                    <td><strong>AC</strong> (Actual Cost)</td>
+                    <td>{{ currency }}{{ numberWithCommas(actualCost.toFixed(decimalDigits)) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>CV</strong> (отклонение по стоимости), {{ currency }}</td>
+                    <td><strong>CV</strong> (Cost Variance)</td>
                     <td>
-                      <span :class="costVariance < 0 ? 'has-text-danger' : 'has-text-success'">{{ costVariance.toFixed(decimalDigits) }}<span>
+                      <span :class="costVariance < 0 ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(costVariance.toFixed(decimalDigits)) }}<span>
                       </td>
                   </tr>
                   <tr>
-                    <td><strong>SV</strong> (отклонение от календарного плана), {{ currency }}</td>
+                    <td><strong>SV</strong> (Schedule Variance)</td>
                     <td>
-                      <span :class="scheduleVariance < 0 ? 'has-text-danger' : 'has-text-success'">{{ scheduleVariance.toFixed(decimalDigits) }}</span>
+                      <span :class="scheduleVariance < 0 ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(scheduleVariance.toFixed(decimalDigits)) }}</span>
                     </td>
                   </tr>
                   <tr>
-                    <td><strong>CPI</strong> (индекс отклонения по стоимости)</td>
+                    <td><strong>CPI</strong> (Cost Performance Index)</td>
                     <td>
-                      <span :class="costPerformanceIndex < 1 ? 'has-text-danger' : 'has-text-success'">{{ costPerformanceIndex.toFixed(decimalDigits) }}</span>
+                      <span :class="costPerformanceIndex < 1 ? 'has-text-danger' : 'has-text-success'">{{ numberWithCommas(costPerformanceIndex.toFixed(decimalDigits)) }}</span>
                     </td>
                   </tr>
                   <tr>
-                    <td><strong>SPI</strong> (индекс отклонения от календарного плана)</td>
+                    <td><strong>SPI</strong> (Schedule Peformance Index)</td>
                     <td>
-                      <span :class="schedulePerformanceIndex < 1 ? 'has-text-danger' : 'has-text-success'">{{ schedulePerformanceIndex.toFixed(decimalDigits) }}</span>
+                      <span :class="schedulePerformanceIndex < 1 ? 'has-text-danger' : 'has-text-success'">{{ numberWithCommas(schedulePerformanceIndex.toFixed(decimalDigits)) }}</span>
                     </td>
                   </tr>
                   <tr>
-                    <td><strong>EAC</strong> (предварительная оценка по завершению), {{ currency }}</td>
-                    <td>{{ estimateAtCompletion.toFixed(decimalDigits) }}</td>
+                    <td><strong>EAC</strong> (Estimate At Completion)</td>
+                    <td>{{ currency }}{{ estimateAtCompletion.toFixed(decimalDigits) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>ETC</strong> (оценка до завершения), {{ currency }}</td>
-                    <td>{{ estimateToComplete.toFixed(decimalDigits) }}</td>
+                    <td><strong>ETC</strong> (Estimate To Complete)</td>
+                    <td>{{ currency }}{{ numberWithCommas(estimateToComplete.toFixed(decimalDigits)) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>VAC</strong> (отклонение бюджета по завершению), {{ currency }}</td>
+                    <td><strong>VAC</strong> (Variance At Completion)</td>
                     <td>
-                      <span :class="varianceAtCompletion < 0 ? 'has-text-danger' : 'has-text-success'">{{ varianceAtCompletion.toFixed(decimalDigits) }}</span>
+                      <span :class="varianceAtCompletion < 0 ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(varianceAtCompletion.toFixed(decimalDigits)) }}</span>
                     </td>
                   </tr>
                 </tbody>
@@ -170,25 +170,25 @@
         <div class="columns">
           <div class="column">
             <div class="container box">
-              <h2 class="title is-4">Ход выполнения проекта</h2>
-              <p><strong>Должно быть выполнено по плану: {{ (plannedCompletionPercentage * 100).toFixed(decimalDigits) }}%</strong></p>
+              <h2 class="title is-4">Project Progress</h2>
+              <p><strong>Should Be Completed According to Plan: {{ (plannedCompletionPercentage * 100).toFixed(decimalDigits) }}%</strong></p>
               <progress class="progress is-primary" :value="plannedCompletionPercentage"
                 max="1">{{ plannedCompletionPercentage }}</progress>
-              <p><strong>Фактически выполнено: <span :class="actualCompletionPercentage < plannedCompletionPercentage ? 'has-text-danger' : 'has-text-success'">{{ (actualCompletionPercentage * 100).toFixed(decimalDigits) }}%</span></strong>
+              <p><strong>Actually Completed: <span :class="actualCompletionPercentage < plannedCompletionPercentage ? 'has-text-danger' : 'has-text-success'">{{ (actualCompletionPercentage * 100).toFixed(decimalDigits) }}%</span></strong>
               </p>
               <progress
                 :class="['progress', actualCompletionPercentage < plannedCompletionPercentage ? 'is-danger' : 'is-success']"
                 :value="actualCompletionPercentage" max="1">{{ actualCompletionPercentage }}</progress>
-              <p><strong>Фактически отработано: {{ elapsedPeriod.toFixed (decimalDigits) }} д.</strong></p>
+              <p><strong>Days Actually Worked: {{ elapsedPeriod.toFixed (decimalDigits) }} days</strong></p>
             </div>
           </div>
           <div class="column">
             <div class="container box">
-              <h2 class="title is-4">Прогноз по проекту</h2>
-              <p><strong>Плановый срок завершения проекта: {{ plannedCompletionPeriod.toFixed(decimalDigits) }} д.</strong></p>
-              <p><strong>Прогнозируемый срок завершения проекта: <span :class="estimatedCompletionPeriod > plannedCompletionPeriod ? 'has-text-danger' : 'has-text-success'">{{ estimatedCompletionPeriod.toFixed(decimalDigits) }} д.</span></strong></p>
-              <p><strong>Плановый бюджет проекта: {{ budgetAtCompletion.toFixed (decimalDigits) }} {{ currency }}</strong></p>
-              <p><strong>Прогнозируемый бюджет проекта: <span :class="estimateAtCompletion > budgetAtCompletion ? 'has-text-danger' : 'has-text-success'">{{ estimateAtCompletion.toFixed(decimalDigits) }} {{ currency }} </span></strong></p>
+              <h2 class="title is-4">Project Forecast</h2>
+              <p><strong>Planned Project Completion Period: {{ numberWithCommas(plannedCompletionPeriod.toFixed(decimalDigits)) }} days</strong></p>
+              <p><strong>Forecasted Project Completion Period: <span :class="estimatedCompletionPeriod > plannedCompletionPeriod ? 'has-text-danger' : 'has-text-success'">{{ numberWithCommas(estimatedCompletionPeriod.toFixed(decimalDigits)) }} days</span></strong></p>
+              <p><strong>Planned Project Budget: {{ currency }}{{ numberWithCommas(budgetAtCompletion.toFixed (decimalDigits)) }}</strong></p>
+              <p><strong>Forecasted Project Budget: <span :class="estimateAtCompletion > budgetAtCompletion ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(estimateAtCompletion.toFixed(decimalDigits)) }}</span></strong></p>
             </div>
           </div>
         </div>
