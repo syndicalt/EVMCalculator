@@ -2,12 +2,12 @@ const app = new Vue({
     el: "#app",
     data() {
         return {
-            plannedWork: 2400,
-            completedWork: 1200,
+            plannedWork: null,
+            completedWork: null,
             remainingWork: null,
-            workersNumber: 5,
+            workersNumber: null,
             currency: "$",
-            humanHourCost: 20,
+            humanHourCost: null,
             hoursPerWorkingDay: 8,
             decimalDigits: 0
         }
