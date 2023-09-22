@@ -16,7 +16,7 @@
   <main id="app">
     <section class="section">
       <div class="container">
-        <h1 class="title is-2">Earned Value Method</h1>
+        <h1 class="title is-2">Earned Value ManagementCalculator</h1>
         <div class="columns">
           <div class="column">
             <div class="container box">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="column">
                   <div class="field">
-                    <label class="label">Houry Cost, {{ currency }}</label>
+                    <label class="label">Hourly Cost, {{ currency }}</label>
                     <div class="control">
                       <input v-model="humanHourCost" type="number" min="0" class="input">
                     </div>
@@ -64,7 +64,7 @@
                   <div class="field">
                     <label class="label">Remaining Work-Hours (Person-Hour)</label>
                     <div class="control">
-                      <input v-model="remainingWork" type="number" min="0" class="input">
+                      <input type="number" min="0" class="input" :value="plannedWork - completedWork" :v-model="remainingWork">
                     </div>
                   </div>
                 </div>
@@ -179,15 +179,15 @@
               <progress
                 :class="['progress', actualCompletionPercentage < plannedCompletionPercentage ? 'is-danger' : 'is-success']"
                 :value="actualCompletionPercentage" max="1">{{ actualCompletionPercentage }}</progress>
-              <p><strong>Days Actually Worked: {{ elapsedPeriod.toFixed (decimalDigits) }} days</strong></p>
+              <p><strong>Days Actually Worked: {{ elapsedPeriod.toFixed () }} Days</strong></p>
             </div>
           </div>
           <div class="column">
             <div class="container box">
               <h2 class="title is-4">Project Forecast</h2>
-              <p><strong>Planned Project Completion Period: {{ numberWithCommas(plannedCompletionPeriod.toFixed(decimalDigits)) }} days</strong></p>
-              <p><strong>Forecasted Project Completion Period: <span :class="estimatedCompletionPeriod > plannedCompletionPeriod ? 'has-text-danger' : 'has-text-success'">{{ numberWithCommas(estimatedCompletionPeriod.toFixed(decimalDigits)) }} days</span></strong></p>
-              <p><strong>Planned Project Budget: {{ currency }}{{ numberWithCommas(budgetAtCompletion.toFixed (decimalDigits)) }}</strong></p>
+              <p><strong>Planned Project Completion Period: {{ numberWithCommas(plannedCompletionPeriod.toFixed(decimalDigits)) }} Days</strong></p>
+              <p><strong>Forecasted Project Completion Period: <span :class="estimatedCompletionPeriod > plannedCompletionPeriod ? 'has-text-danger' : 'has-text-success'">{{ numberWithCommas(estimatedCompletionPeriod.toFixed(decimalDigits)) }} Days</span></strong></p>
+              <p><strong>Planned Project Budget: {{ currency }}{{ numberWithCommas(budgetAtCompletion.toFixed(decimalDigits)) }}</strong></p>
               <p><strong>Forecasted Project Budget: <span :class="estimateAtCompletion > budgetAtCompletion ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(estimateAtCompletion.toFixed(decimalDigits)) }}</span></strong></p>
             </div>
           </div>

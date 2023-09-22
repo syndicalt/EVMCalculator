@@ -2,17 +2,21 @@ const app = new Vue({
     el: "#app",
     data() {
         return {
-            plannedWork: null,
-            completedWork: null,
+            plannedWork: 2400,
+            completedWork: 1200,
             remainingWork: null,
-            workersNumber: null,
+            workersNumber: 5,
             currency: "$",
-            humanHourCost: null,
+            humanHourCost: 20,
             hoursPerWorkingDay: 8,
             decimalDigits: 0
         }
     },
     computed: {
+        hoursRemain() {
+            return(+this.plannedWork - +this.completedWork) || 1
+        },
+
         plannedCompletionPeriod() {
             return (+this.plannedWork / +this.hoursPerWorkingDay / +this.workersNumber) || 0
         },
