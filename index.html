@@ -172,7 +172,7 @@
             <div class="container box">
               <h2 class="title is-4">Project Progress</h2>
               <p><strong>Should Be Completed According to Plan: {{ (plannedCompletionPercentage * 100).toFixed(decimalDigits) }}%</strong></p>
-              <progress class="progress is-primary" :value="plannedCompletionPercentage"
+              <progress class="progress is-secondary" :value="plannedCompletionPercentage"
                 max="1">{{ plannedCompletionPercentage }}</progress>
               <p><strong>Actually Completed: <span :class="actualCompletionPercentage < plannedCompletionPercentage ? 'has-text-danger' : 'has-text-success'">{{ (actualCompletionPercentage * 100).toFixed(decimalDigits) }}%</span></strong>
               </p>
