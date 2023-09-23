@@ -11,7 +11,14 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.0/css/bulma.min.css">
 </head>
-
+<style>
+  .show {
+    display: block;
+  }
+  .hide {
+    display: none;
+  }
+</style>
 <body>
   <main id="app">
     <section class="section">
@@ -149,8 +156,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><strong>EAC</strong> (Estimate At Completion)</td>
-                    <td>{{ currency }}{{ numberWithCommas(estimateAtCompletion.toFixed(decimalDigits)) }}</td>
+                    <td><strong>EACv2</strong> (Estimate At Completion v2)</td>
+                    <td>{{ currency }}{{ numberWithCommas(estimateAtCompletionV2.toFixed(decimalDigits)) }}</td>
                   </tr>
                   <tr>
                     <td><strong>ETC</strong> (Estimate To Complete)</td>
@@ -190,7 +197,7 @@
               <p><strong>Planned Project Completion Period: {{ numberWithCommas(plannedCompletionPeriod.toFixed(decimalDigits)) }} Days</strong></p>
               <p><strong>Forecasted Project Completion Period: <span :class="estimatedCompletionPeriod > plannedCompletionPeriod ? 'has-text-danger' : 'has-text-success'">{{ numberWithCommas(estimatedCompletionPeriod.toFixed(decimalDigits)) }} Days</span></strong></p>
               <p><strong>Planned Project Budget: {{ currency }}{{ numberWithCommas(budgetAtCompletion.toFixed(decimalDigits)) }}</strong></p>
-              <p><strong>Forecasted Project Budget: <span :class="estimateAtCompletion > budgetAtCompletion ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(estimateAtCompletion.toFixed(decimalDigits)) }}</span></strong></p>
+              <p><strong>Forecasted Project Budget: <span :class="estimateAtCompletionV2 > budgetAtCompletion ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(estimateAtCompletionV2.toFixed(decimalDigits)) }}</span></strong></p>
             </div>
           </div>
         </div>
