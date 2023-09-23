@@ -67,3 +67,16 @@ const app = new Vue({
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+function exportCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Planned Work,Completed Work,Remaining Work,Workers Number,Human Hour Cost,Hours Per Working Day,Planned Completion Period,Elapsed Period,Estimated Completion Period,Planned Completion Percentage,Actual Completion Percentage,Budget At Completion,Planned Value,Earned Value,Actual Cost,Cost Variance,Schedule Variance,Cost Performance Index,Schedule Performance Index,Estimate At Completion,Estimate To Complete,Variance At Completion\n";
+    csvContent += `${app.plannedWork},${app.completedWork},${app.remainingWork},${app.workersNumber},${app.humanHourCost},${app.hoursPerWorkingDay},${app.plannedCompletionPeriod},${app.elapsedPeriod},${app.estimatedCompletionPeriod},${app.plannedCompletionPercentage},${app.actualCompletionPercentage},${app.budgetAtCompletion},${app.plannedValue},${app.earnedValue},${app.actualCost},${app.costVariance},${app.scheduleVariance},${app.costPerformanceIndex},${app.schedulePerformanceIndex},${app.estimateAtCompletion},${app.estimateToComplete},${app.varianceAtCompletion}\n`;
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    let date = new Date()
+    link.setAttribute("download", `EVMCalculator_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.csv`);
+    document.body.append(link);
+    link.click();
+}
