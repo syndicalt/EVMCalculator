@@ -52,6 +52,9 @@ const app = new Vue({
         schedulePerformanceIndex() {
             return (this.earnedValue / +this.plannedValue) || 0
         },
+        estimateAtCompletion() {
+            return(+this.actualCost / +this.actualCompletionPercentage) || 0
+        },
         estimateAtCompletionV2() {
             return (+this.budgetAtCompletion / +this.costPerformanceIndex) || 0
         },
@@ -60,6 +63,12 @@ const app = new Vue({
         },
         varianceAtCompletion() {
             return (+this.budgetAtCompletion - +this.estimateAtCompletionV2) || 0
+        },
+        toCompletePerformanceIndex() {
+            return ((+this.budgetAtCompletion - +this.earnedValue) / (+this.budgetAtCompletion - +this.actualCost) || 0)
+        },
+        toCompletePerformanceIndexV2() {
+            return ((+this.budgetAtCompletion - +this.earnedValue) / (+this.estimateAtCompletionV2 - +this.actualCost)) || 0
         }
     }
 })

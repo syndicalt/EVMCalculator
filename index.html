@@ -156,6 +156,10 @@
                     </td>
                   </tr>
                   <tr>
+                    <td><strong>EACv1</strong> (Estimate At Completion v1)</td>
+                    <td>{{ currency }}{{ numberWithCommas(estimateAtCompletion.toFixed(decimalDigits)) }}</td>
+                  </tr>
+                  <tr>
                     <td><strong>EACv2</strong> (Estimate At Completion v2)</td>
                     <td>{{ currency }}{{ numberWithCommas(estimateAtCompletionV2.toFixed(decimalDigits)) }}</td>
                   </tr>
@@ -168,6 +172,14 @@
                     <td>
                       <span :class="varianceAtCompletion < 0 ? 'has-text-danger' : 'has-text-success'">{{ currency }}{{ numberWithCommas(varianceAtCompletion.toFixed(decimalDigits)) }}</span>
                     </td>
+                  </tr>
+                  <tr>
+                    <td><strong>TCPIv1</strong> (To Complete Performance Index v1)</td>
+                    <td :class="toCompletePerformanceIndex > 1 ? 'has-text-danger' : 'has-text-success'">{{ toCompletePerformanceIndex.toFixed(decimalDigits+2) }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TCPIv2</strong> (To Complete Performance Index v2)</td>
+                    <td :class="toCompletePerformanceIndexV2 < 1 ? 'has-text-danger' : 'has-text-success'">{{ toCompletePerformanceIndexV2.toFixed(decimalDigits+2) }}</td>
                   </tr>
                 </tbody>
               </table>
